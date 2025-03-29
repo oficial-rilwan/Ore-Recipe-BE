@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include ('./partials/header') %>
+
+<body>
+  <div style="min-height: 100vh;" class="d-flex justify-content-center align-items-center">
+    <div>
+      <div class="d-flex justify-content-center">
+        <%- include ('./partials/logo') %>
+      </div>
+
+
+      <form action="/api/users/register" method="post" id="loginForm" class="login_form">
+        <div class="fs-4 fw-semibold text-center">Get Started</div>
+        <div class="text-center">Wecome to Ore Foods - Let's create your account</div>
+        <div class="border my-3"></div>
+        <% if (error) { %>
+        <div class="alert alert-danger mb-3" role="alert">
+          <%= error %>
+        </div>
+        <% } %>
+        <div class="mb-4">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <label for="firstName" class="d-block fw-semibold">First Name</label>
+              <input type="text" name="firstName" id="firstName" class="form_input" required>
+            </div>
+            <div class="col-12 col-md-6">
+              <label for="lastName" class="d-block fw-semibold">Last Name</label>
+              <input type="text" name="lastName" id="lastName" class="form_input" required>
+            </div>
+          </div>
+
+        </div>
+        <div class="mb-4">
+          <label for="email" class="d-block fw-semibold">Email</label>
+          <input type="email" name="email" id="email" class="form_input" required>
+        </div>
+        <div class="mb-5">
+          <label for="password" class="d-block fw-semibold">Password</label>
+          <input type="password" name="password" id="password" class="form_input" required>
+        </div>
+        <div>
+          <button class="primary_btn" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

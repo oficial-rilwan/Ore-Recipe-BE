@@ -1,0 +1,24 @@
+   <div class="d-flex align-items-center justify-content-end">
+     <% if (user) { %>
+     <div class="dropdown">
+       <button style="all: unset; display: flex; align-items: center; cursor: pointer;" class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+         <i class="fa fa-user-circle-o primary_color fs-4 me-2" aria-hidden="true"></i>
+         <span><%= user.firstName %></span>
+       </button>
+       <ul class="dropdown-menu">
+         <li><a class="dropdown-item" href="#"><i class="fa fa-user-o me-3" aria-hidden="true"></i>
+             Profile</a></li>
+         <li><a class="dropdown-item" href="#"><i class="fa fa-lock me-3" aria-hidden="true"></i>
+             Password & Security</a></li>
+         <li><a class="dropdown-item" href="#" onclick="handleLogout()"><i class="fa fa-sign-out me-3 text-danger" aria-hidden="true"></i>
+             <span class="text-danger">Logout</span></a></li>
+       </ul>
+     </div>
+
+     <% } else{ %>
+     <a href="/auth" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+       <i class="fa fa-user-circle-o primary_color fs-4 me-2" aria-hidden="true"></i>
+       <span>Login</span>
+     </a>
+     <% } %>
+   </div>
