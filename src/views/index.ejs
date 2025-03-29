@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="col">
-        <%- include ('./partials/search-bar') %>
+        <%- include ('./partials/search-bar', { type: "recipe"}) %>
       </div>
       <div class="col">
         <%- include ('./partials/user-menu') %>
@@ -45,7 +45,7 @@
       <div class="container-xl py-5">
         <div class="fs-2 fw-bold mb-4 text-center">Fresh Picks</div>
         <div class="row">
-          <%for (const item of recipes.slice(7, 15)){ %>
+          <%for (const item of recipes.slice(7, 20)){ %>
         <div class="col-12 col-md-4 col-lg-3 mb-4">
           <a style="color: inherit; text-decoration: none;" class="" href="/recipe/<%= item._id %>">
             <img class="mb-3" style="width: 100%; height: 200px; object-fit: cover;" src="<%= item.imageURL %>" alt="<%= item.name %>">
@@ -53,6 +53,30 @@
               <div class="fs-5 fw-bold"><%= item.name %></div>
               <div><small class="text-secondary"><%= item.categories.join(", ") %></small></div>
               <div><small class="text-secondary"><%= item.calories %> calories</small></div>
+
+            </div>
+          </a>
+        </div>
+        <%}%>
+
+      </div>
+    </div>
+          <div class="container-xl py-5">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="fs-2 fw-bold mb-4">Top Restaurants</div>
+              <a class="primary_color fs-5" href="/restaurants">See All <i class="fa fa-arrow-right ml-3" aria-hidden="true"></i>
+</a>
+            </div>
+            <div class="row">
+              <%for (const item of restaurants.slice(0, 4)){ %>
+        <div class="col-12 col-md-4 col-lg-3 mb-4">
+          <a style="color: inherit; text-decoration: none;" class="" href="/recipe/<%= item._id %>">
+            <img class="mb-3" style="width: 100%; height: 200px; object-fit: cover;" src="<%= item.imageURL %>" alt="<%= item.name %>">
+            <div>
+              <div class="fs-5 fw-bold"><%= item.name %></div>
+              <div><i class="fa fa-map-marker primary_color fs-6" aria-hidden="true"></i>
+                <small class="text-secondary"><%= item.location %></small>
+              </div>
 
             </div>
           </a>

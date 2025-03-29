@@ -33,16 +33,17 @@ class Repository {
     const where: any = {};
     const page = query.page || 1;
     const limit = query.limit || 10;
-
     const skip = (page - 1) * limit;
 
     let filters: any = {};
 
     if (query.keyword) {
-      for (const item of query.searchFields) {
-        filters[item] = { $regex: query.keyword as string, $options: "i" };
-        where[item] = { $regex: query.keyword as string, $options: "i" };
-      }
+      where["$or"] = [
+        ...query.searchFields.map((item) => ({ [item]: { $regex: query.keyword as string, $options: "i" } })),
+      ];
+      filters["$or"] = [
+        ...query.searchFields.map((item) => ({ [item]: { $regex: query.keyword as string, $options: "i" } })),
+      ];
     }
 
     const recipes = await this.context.find(where).skip(skip).limit(limit);

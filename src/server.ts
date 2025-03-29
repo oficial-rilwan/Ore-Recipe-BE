@@ -8,6 +8,8 @@ import appRoutes from "./routes/app.routes";
 import recipeRoutes from "./routes/recipe.routes";
 import restaurantRoutes from "./routes/restaurant.routes";
 import errorHandler from "./middleware/error-handler";
+import Restaurant from "./models/restaurant.model";
+import { topRestaurants } from "./static/data";
 
 dotenv.config();
 database.connect();
