@@ -6,6 +6,33 @@
 
 This project is a fullstack application structured using controllers, routes, middleware, repository patterns, models, and validation layers. https://ore-recipe.onrender.com
 
+## API Endpoints
+
+| Method | Endpoint                | Description                  |
+| ------ | ----------------------- | ---------------------------- |
+| GET    | `/api/users`            | Fetch all users              |
+| GET    | `/api/users/:name`      | Fetch user by name           |
+| GET    | `/api/users/profile`    | Fetch authenticate user      |
+| POST   | `/api/users/register`   | Register a new user          |
+| POST   | `/api/users/auth`       | Authenticate user            |
+| POST   | `/api/users/signout`    | Sign-Out authenticate user   |
+| POST   | `/api/users/deavtivate` | Deactivate authenticate user |
+| GET    | `/api/recipes`          | Get all recipes              |
+| GET    | `/api/recipes/:id`      | Get single recipe            |
+| GET    | `/api/restaurants`      | Get all restaurants          |
+| GET    | `/api/restaurants/:id`  | Get single restaurant        |
+
+## API Routes
+
+| Method | Route          | Description          |
+| ------ | -------------- | -------------------- |
+| GET    | `/`            | Home page            |
+| GET    | `/auth`        | Login page           |
+| GET    | `/register`    | Sign-Up page         |
+| GET    | `/search`      | Recipe search page   |
+| GET    | `/recipe/:id`  | Preview recipes page |
+| GET    | `/restaurants` | Restaurants page     |
+
 ## Folder Structure
 
 ```
@@ -123,18 +150,6 @@ cp .env.example .env
 # Start the server
 npm run dev
 ```
-
-## API Endpoints
-
-| Method | Endpoint              | Description         |
-| ------ | --------------------- | ------------------- |
-| GET    | `/api/users`          | Fetch all users     |
-| GET    | `/api/users/:name`    | Fetch user by name  |
-| POST   | `/api/users/register` | Register a new user |
-| POST   | `/api/users/login`    | Authenticate user   |
-| GET    | `/api/recipes`        | Get all recipes     |
-| POST   | `/api/recipes`        | Create a new recipe |
-| GET    | `/api/restaurants`    | Get all restaurants |
 
 ## License
 

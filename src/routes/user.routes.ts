@@ -10,6 +10,7 @@ userRoutes.post("/register", expressAsyncHandler(userController.signup as any));
 userRoutes.post("/signout", expressAsyncHandler(userController.signout as any));
 userRoutes.post("/deactivate", isAuth, expressAsyncHandler(userController.deactivate as any));
 
+userRoutes.get("/profile", expressAsyncHandler(userController.profile));
 userRoutes.get("/:name", expressAsyncHandler(userController.findByName));
 userRoutes.get("/", expressAsyncHandler(userController.find));
 
