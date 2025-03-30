@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
-dotenv.config();
+import { CONFIG } from "../config/config";
 
 class DatabaseConnection {
   private connection_string?: string;
   constructor() {
-    this.connection_string = process.env.MONGO_URI;
+    this.connection_string = CONFIG.MONGO_URI;
   }
   async connect() {
     try {

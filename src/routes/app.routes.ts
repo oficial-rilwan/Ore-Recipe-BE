@@ -8,8 +8,8 @@ const appRoutes = Router();
 appRoutes.get("/recipe/:id", isAuth, expressAsyncHandler(appController.recipe));
 appRoutes.get("/restaurants", isAuth, expressAsyncHandler(appController.restaurants));
 appRoutes.get("/search", isAuth, expressAsyncHandler(appController.search));
-appRoutes.get("/register", isAuth, expressAsyncHandler(appController.register));
-appRoutes.get("/auth", isAuth, expressAsyncHandler(appController.auth));
+appRoutes.get("/register", isAuth, expressAsyncHandler(appController.register as any));
+appRoutes.get("/auth", isAuth, expressAsyncHandler(appController.auth as any));
 appRoutes.get("/", isAuth, expressAsyncHandler(appController.home));
 
 export default appRoutes;

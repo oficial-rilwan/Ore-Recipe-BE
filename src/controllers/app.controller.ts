@@ -8,16 +8,14 @@ import convertCurrency from "../utils/currency-converter";
 import RestaurantRepository from "../repo/restaurant.repo";
 import RestaurantSearch from "../models/restaurant-search.model";
 import RecipeSearch from "../models/recipe-search.model";
+import { AppResponse } from "../middleware/error-handler";
 
 class AppController {
   private repository: UserRepository;
   private recipeRepository: RecipeRepository;
   private restaurantRepository: RestaurantRepository;
 
-  private jwtSecret: string;
-
   constructor() {
-    this.jwtSecret = "jwtSecret";
     this.repository = new UserRepository();
     this.recipeRepository = new RecipeRepository();
     this.restaurantRepository = new RestaurantRepository();
@@ -33,66 +31,69 @@ class AppController {
   async home(req: any, res: Response) {
     const query: any = {};
     if (req.query.search) query["keyword"] = req.query.search;
+    const data = { title: "Home", user: null, recipes: [], restaurants: [] } as any;
 
     const { data: recipes } = await this.recipeRepository.find(query);
     const { data: restaurants } = await this.restaurantRepository.find(query);
 
-    const data = { title: "Home", user: null, recipes, restaurants } as any;
-
     data.user = req.user;
-    res.render("index", data);
+    data.recipes = recipes;
+    data.restaurants = restaurants;
+    new AppResponse(res).render("index", data);
   }
 
   async search(req: any, res: Response) {
     const query = String(req.query.search);
+    const data = { title: "Home", user: null, recipes: [], query } as any;
+
     const recipes = await this.recipeRepository.search(query);
     if (req.query.search && req?.user) {
       await RecipeSearch.create({ query: req.query.search, userId: req.user?._id });
     }
-    const data = { title: "Home", user: null, recipes, query } as any;
 
     data.user = req.user;
-    res.render("search", data);
+    data.recipes = recipes;
+    new AppResponse(res).render("search", data);
   }
 
   async recipe(req: any, res: Response) {
     const id = req.params.id;
-    const recipe = await this.recipeRepository.findById<RecipeProps>(id);
+    const data = { title: "Home", user: null, recipes: [], recipe: null, USD: 0 } as any;
+
     const { data: recipes } = await this.recipeRepository.find();
-
-    if (!recipe) return res.render("404");
-
+    const recipe = await this.recipeRepository.findById<RecipeProps>(id);
     const USDPrice = await convertCurrency(recipe.price);
-    const data = { title: "Home", user: null, recipes, recipe, USD: USDPrice } as any;
 
     data.user = req.user;
-    res.render("recipe", data);
+    data.USD = USDPrice;
+    data.recipe = recipe;
+    data.recipes = recipes;
+    new AppResponse(res).render("recipe", data);
   }
 
   async restaurants(req: any, res: Response) {
     const query: any = { searchFields: ["name", "location"] };
     if (req.query.search) query["keyword"] = req.query.search;
+    const data = { title: "Home", user: null, restaurants: [], query: req.query.search } as any;
 
     const { data: restaurants } = await this.restaurantRepository.find(query);
     if (req.query.search && req?.user) {
       await RestaurantSearch.create({ query: req.query.search, userId: req.user?._id });
     }
-    const data = { title: "Home", user: null, restaurants, query: req.query.search } as any;
 
     data.user = req.user;
-    res.render("restaurants", data);
+    data.restaurants = restaurants;
+    new AppResponse(res).render("restaurants", data);
   }
 
   auth(req: any, res: Response) {
-    if (!req.isValidToken) return res.render("auth", { error: null });
-
-    res.redirect("/");
+    if (!req.isValidToken) return new AppResponse(res).render("auth", { error: null });
+    new AppResponse(res).redirect("/");
   }
 
   register(req: any, res: Response) {
-    if (!req.isValidToken) return res.render("register", { error: null });
-
-    res.redirect("/");
+    if (!req.isValidToken) return new AppResponse(res).render("register", { error: null });
+    new AppResponse(res).redirect("/");
   }
 }
 

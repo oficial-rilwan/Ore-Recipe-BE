@@ -8,14 +8,13 @@ import appRoutes from "./routes/app.routes";
 import recipeRoutes from "./routes/recipe.routes";
 import restaurantRoutes from "./routes/restaurant.routes";
 import errorHandler from "./middleware/error-handler";
-import Restaurant from "./models/restaurant.model";
-import { topRestaurants } from "./static/data";
+import { CONFIG } from "./config/config";
 
 dotenv.config();
 database.connect();
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = CONFIG.PORT || 8080;
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
