@@ -1,4 +1,4 @@
-  <form action="<%= type == 'restaurants' ? '/restaurants' : '/search' %>" method="get">
+  <form action="<%= type == 'restaurants' ? '/restaurants' : '/search' %>" method="get" class="d-none d-md-block">
     <div class="input-group">
       <input type="text" name="search" class="form-control" placeholder="<%= type == 'recipe' ? 'Find a recipe or ingredient' : 'Find restaurants and locations' %>">
       <button type="submit" class="input-group-text" id="basic-addon1" style="background: #6D37AA;"><i class="fa fa-search text-white" aria-hidden="true"></i></button>
