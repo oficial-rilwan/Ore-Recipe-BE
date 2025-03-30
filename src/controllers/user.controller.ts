@@ -68,7 +68,7 @@ class UserController {
   async find(req: Request, res: Response) {
     const query = req.query.search;
     const users = await this.repository.find<UserProps>({ name: query } as any);
-    users.data = users.data.map((item: any) => _.omit(item._doc, ["password"]) as UserProps);
+    users.data = users.data.map((item: any) => _.omit(item, ["password"]) as UserProps);
 
     new AppResponse(res, 200).json(users);
   }
@@ -78,7 +78,7 @@ class UserController {
     const user: any = await this.repository.findOne<UserProps>(query as any);
     if (!user) throw new NotFoundError("The requested user could not be found.");
 
-    new AppResponse(res, 200).json(_.omit(user._doc, ["password"]));
+    new AppResponse(res, 200).json(_.omit(user, ["password"]));
   }
 
   async profile(req: any, res: Response) {

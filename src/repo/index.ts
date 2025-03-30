@@ -13,7 +13,7 @@ class Repository {
 
   async create<T>(data: T) {
     const result = await this.context.create(data);
-    return result._doc as T;
+    return result.toObject() as T;
   }
 
   async update<T>(data: T, id: string) {
@@ -21,12 +21,12 @@ class Repository {
   }
   async findById<T>(id: string) {
     const result = await this.context.findById(id);
-    return result as T;
+    return result.toObject() as T;
   }
   async findOne<T>(query: { [key: string]: string | number } = {}) {
     const where = { ...query };
     const result = await this.context.findOne(where);
-    return result as T;
+    return result.toObject() as T;
   }
 
   async find<T>(query = this.query) {
@@ -46,14 +46,14 @@ class Repository {
       ];
     }
 
-    const recipes = await this.context.find(where).skip(skip).limit(limit);
+    const result = await this.context.find(where).skip(skip).limit(limit);
     const totalCount = await this.context.countDocuments(filters);
     return {
       page,
       limit,
       totalDocs: totalCount,
       totalPages: Math.ceil(totalCount / limit),
-      data: recipes as T[],
+      data: result.map((doc: any) => doc.toObject()) as T[],
     };
   }
 
