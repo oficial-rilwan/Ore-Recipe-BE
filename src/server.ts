@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import path from "path";
 import dotenv from "dotenv";
+import cors from "cors";
 import database from "./database";
 import userRoutes from "./routes/user.routes";
 import cookieParser from "cookie-parser";
@@ -20,13 +21,14 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
 
 app.use(express.json());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(cookieParser());
 
 app.use("/", appRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/recipe", recipeRoutes);
+app.use("/api/recipes", recipeRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 
 app.listen(PORT, () => {

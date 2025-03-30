@@ -30,6 +30,7 @@
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
     "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/lodash": "^4.17.16",
