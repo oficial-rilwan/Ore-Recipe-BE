@@ -32,7 +32,7 @@ class Repository {
   async find<T>(query = this.query) {
     const where: any = {};
     const page = query.page || 1;
-    const limit = query.limit || 10;
+    const limit = query.limit || 20;
     const skip = (page - 1) * limit;
 
     let filters: any = {};

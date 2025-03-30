@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import UserRepository from "../repo/users.repo";
+import { UserProps } from "../types";
 
 const userRepository = new UserRepository();
 
@@ -9,10 +10,10 @@ export default async function isAuth(req: any, res: Response, next: NextFunction
     const token = req.cookies.token;
     const decoded: any = jwt.verify(token, "jwtSecret");
 
-    const user = await userRepository.findOne({ email: decoded.email });
-    if (!user) res.status(401).send({ error: "User not found" }).end();
+    const user = await userRepository.findOne<UserProps>({ email: decoded.email });
 
-    req.user = user;
+    if (user) req.user = user;
+    req.isValidToken = true;
     next();
   } catch (error) {
     req.isValidToken = false;

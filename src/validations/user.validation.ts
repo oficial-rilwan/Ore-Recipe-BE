@@ -11,6 +11,15 @@ class UserValidation {
     if (error) return error.details[0].message;
     return null;
   }
+  password<T>(data: T) {
+    const schema = Joi.object({
+      password: Joi.string().min(6).max(55).required().label("Password"),
+    });
+
+    const { error } = schema.validate(data);
+    if (error) return error.details[0].message;
+    return null;
+  }
   signup<T>(data: T) {
     const schema = Joi.object({
       firstName: Joi.string()

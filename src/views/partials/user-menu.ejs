@@ -10,6 +10,8 @@
              Profile</a></li>
          <li><a class="dropdown-item" href="#"><i class="fa fa-lock me-3" aria-hidden="true"></i>
              Password & Security</a></li>
+         <li data-bs-toggle="modal" data-bs-target="#deactivationModal"><a class="dropdown-item" href="#"><i class="fa fa-ban me-3" aria-hidden="true"></i>
+             Deactivate Account</a></li>
          <li><a class="dropdown-item" href="#" onclick="handleLogout()"><i class="fa fa-sign-out me-3 text-danger" aria-hidden="true"></i>
              <span class="text-danger">Logout</span></a></li>
        </ul>
@@ -21,4 +23,29 @@
        <span>Login</span>
      </a>
      <% } %>
+
+
+
+     <div class="modal" tabindex="-1" id="deactivationModal">
+       <div class="modal-dialog">
+         <form class="modal-content" id="deactivateForm">
+           <div class="modal-header">
+             <h5 class="modal-title">Deactivate Account</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+           </div>
+           <div class="modal-body">
+             <div class="alert alert-danger mb-3 d-none" role="alert" id="deactivateAccountAlert">
+             </div>
+             <p>To deactivate your account enter your password to continue.</p>
+             <div class="mb-3">
+               <input required min="6" type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
+             </div>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+             <button type="submit" class="btn btn-danger">Save changes</button>
+           </div>
+         </form>
+       </div>
+     </div>
    </div>

@@ -6,6 +6,8 @@ import RecipeRepository from "../repo/recipe.repo";
 import { RecipeProps } from "../types";
 import convertCurrency from "../utils/currency-converter";
 import RestaurantRepository from "../repo/restaurant.repo";
+import RestaurantSearch from "../models/restaurant-search.model";
+import RecipeSearch from "../models/recipe-search.model";
 
 class AppController {
   private repository: UserRepository;
@@ -44,7 +46,9 @@ class AppController {
   async search(req: any, res: Response) {
     const query = String(req.query.search);
     const recipes = await this.recipeRepository.search(query);
-
+    if (req.query.search && req?.user) {
+      await RecipeSearch.create({ query: req.query.search, userId: req.user?._id });
+    }
     const data = { title: "Home", user: null, recipes, query } as any;
 
     data.user = req.user;
@@ -70,6 +74,9 @@ class AppController {
     if (req.query.search) query["keyword"] = req.query.search;
 
     const { data: restaurants } = await this.restaurantRepository.find(query);
+    if (req.query.search && req?.user) {
+      await RestaurantSearch.create({ query: req.query.search, userId: req.user?._id });
+    }
     const data = { title: "Home", user: null, restaurants, query: req.query.search } as any;
 
     data.user = req.user;

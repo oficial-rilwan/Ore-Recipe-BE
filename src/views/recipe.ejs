@@ -30,7 +30,7 @@
           <div class="fw-bold">Ingredients:</div>
           <ul class="mb-3">
             <%for (const item of recipe.ingredients){ %>
-            <li><%= item.quantity %> <%= item.name %> at <span>₦ <%= item.price.toLocaleString() %></span></li>
+            <li><%= item.quantity %> <%= item.name %> at <span>₦<%= item.price.toLocaleString() %></span></li>
             <%}%>
           </ul>
     
