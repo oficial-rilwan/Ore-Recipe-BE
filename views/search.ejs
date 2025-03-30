@@ -20,6 +20,7 @@
     </div>
   </header>
   <main>
+    <%- include ('./partials/toast') %>
     <div class="container-xl py-5">
       <div class="fs-5 mb-4">Search results for: <span class="fs-3 fw-bold"><%= query %></span></div>
       <%if(!recipes.length){%>

@@ -14,12 +14,12 @@ async function handleLogout() {
 }
 
 function showToast(message, isSuccess = false) {
-  toastBtn.click();
-  toastBody.textContent = message;
   if (isSuccess) {
     toastWrapper.classList.remove("text-bg-danger");
     toastWrapper.classList.add("text-bg-success");
-  }
+  } else toastWrapper.classList.add("text-bg-danger");
+  toastBody.textContent = message;
+  toastBtn.click();
 }
 
 document.getElementById("deactivateForm").addEventListener("submit", async function (event) {
