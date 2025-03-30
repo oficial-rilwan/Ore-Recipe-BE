@@ -1,11 +1,24 @@
+const toastBody = document.getElementById("toastBody");
+const toastBtn = document.getElementById("liveToastBtn");
+const toastWrapper = document.getElementById("liveToast");
 const deactivationModal = document.getElementById("deactivationModal");
 
 async function handleLogout() {
   try {
     await axios.post("/api/users/signout", {}, { withCredentials: true });
-    window.location.replace("/");
+    showToast("User logged out successfully...", true);
+    setTimeout(() => window.location.replace("/"), 1500);
   } catch (error) {
-    console.log(error);
+    showToast(error?.response?.data?.error || "Unexpected error occured");
+  }
+}
+
+function showToast(message, isSuccess = false) {
+  toastBtn.click();
+  toastBody.textContent = message;
+  if (isSuccess) {
+    toastWrapper.classList.remove("text-bg-danger");
+    toastWrapper.classList.add("text-bg-success");
   }
 }
 
@@ -50,3 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
 const popoverList = [...popoverTriggerList].map((popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl));
+
+const toastTrigger = document.getElementById("liveToastBtn");
+const toastLiveExample = document.getElementById("liveToast");
+
+if (toastTrigger) {
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  toastTrigger.addEventListener("click", () => {
+    toastBootstrap.show();
+  });
+}
