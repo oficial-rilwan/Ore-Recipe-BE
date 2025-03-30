@@ -17,7 +17,10 @@ function showToast(message, isSuccess = false) {
   if (isSuccess) {
     toastWrapper.classList.remove("text-bg-danger");
     toastWrapper.classList.add("text-bg-success");
-  } else toastWrapper.classList.add("text-bg-danger");
+  } else {
+    toastWrapper.classList.remove("text-bg-success");
+    toastWrapper.classList.add("text-bg-danger");
+  }
   toastBody.textContent = message;
   toastBtn.click();
 }
