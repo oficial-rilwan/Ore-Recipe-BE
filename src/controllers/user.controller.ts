@@ -104,7 +104,7 @@ class UserController {
   }
 
   async signout(req: Request, res: Response) {
-    new AppResponse(res, 200).cookie("token", "", 0, new Date(0)).render("index", { user: null });
+    new AppResponse(res, 200).cookie("token", "", 0, new Date(0)).json({ data: "User logged out successfully" });
   }
 }
 

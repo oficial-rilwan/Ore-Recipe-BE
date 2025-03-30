@@ -1,15 +1,12 @@
 const deactivationModal = document.getElementById("deactivationModal");
 
 async function handleLogout() {
-  await fetch("/api/users/signout", {
-    method: "POST",
-    body: JSON.stringify({}),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
-  window.location.replace("/");
+  try {
+    await axios.post("/api/users/signout", {}, { withCredentials: true });
+    window.location.replace("/");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 document.getElementById("deactivateForm").addEventListener("submit", async function (event) {
@@ -45,21 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   ScrollReveal().reveal(".reveal-banner", {
     duration: 1000,
-    scale: 0.5, // Start at 50% size
+    scale: 0.5,
     easing: "ease-in-out",
-    distance: "0px", // No movement, just zooming
+    distance: "0px",
   });
 });
 
 const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
 const popoverList = [...popoverTriggerList].map((popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl));
-
-const toastTrigger = document.getElementById("liveToastBtn");
-const toastLiveExample = document.getElementById("liveToast");
-
-if (toastTrigger) {
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-  toastTrigger.addEventListener("click", () => {
-    toastBootstrap.show();
-  });
-}
