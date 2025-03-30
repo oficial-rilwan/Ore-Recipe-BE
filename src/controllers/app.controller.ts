@@ -8,7 +8,7 @@ import convertCurrency from "../utils/currency-converter";
 import RestaurantRepository from "../repo/restaurant.repo";
 import RestaurantSearch from "../models/restaurant-search.model";
 import RecipeSearch from "../models/recipe-search.model";
-import { AppResponse } from "../middleware/error-handler";
+import { AppResponse, NotFoundError } from "../middleware/error-handler";
 
 class AppController {
   private repository: UserRepository;
@@ -62,6 +62,8 @@ class AppController {
 
     const { data: recipes } = await this.recipeRepository.find();
     const recipe = await this.recipeRepository.findById<RecipeProps>(id);
+    if (!recipe) throw new NotFoundError("Requested recipe could not be found");
+
     const USDPrice = await convertCurrency(recipe.price);
 
     data.user = req.user;
