@@ -7,7 +7,7 @@ async function handleLogout() {
   try {
     await axios.post("/api/users/signout", {}, { withCredentials: true });
     showToast("User logged out successfully...", true);
-    setTimeout(() => window.location.replace("/"), 1500);
+    setTimeout(() => window.location.reload(), 1500);
   } catch (error) {
     showToast(error?.response?.data?.error || "Unexpected error occured");
   }
