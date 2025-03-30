@@ -31,6 +31,26 @@ document.getElementById("deactivateForm").addEventListener("submit", async funct
   }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  ScrollReveal().reveal(".reveal-item", {
+    delay: 200,
+    duration: 800,
+    distance: "50px",
+    origin: "bottom",
+    easing: "ease-in-out",
+    interval: 200,
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  ScrollReveal().reveal(".reveal-banner", {
+    duration: 1000,
+    scale: 0.5, // Start at 50% size
+    easing: "ease-in-out",
+    distance: "0px", // No movement, just zooming
+  });
+});
+
 const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
 const popoverList = [...popoverTriggerList].map((popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl));
 

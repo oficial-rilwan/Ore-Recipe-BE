@@ -20,14 +20,14 @@
     </div>
   </header>
   <main>
-    <div class="banner">
+    <div class="banner reveal-banner">
       <img style="width: 100%; height: auto;" src="https://www.allrecipes.com/thmb/zMYEHY5anMrplRcqciuDCjH7Cio=/1900x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/705937_Grilled-Asian-Chicken-2000-e7e11131fd29411ab259bd23e772ef2b.jpg" alt="Main Banner">
     </div>
     <div class="container-xl py-5">
       <div class="fs-2 fw-bold mb-4">Trending Now</div>
       <div class="row">
         <%for (const item of recipes.slice(0, 6)){ %>
-        <div class="col-12 col-md-6 col-lg-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-4 mb-4 reveal-item">
           <a style="color: inherit; text-decoration: none;" class="d-flex gap-3" href="/recipe/<%= item._id %>">
             <img style="width: 120px; height: 100px; object-fit: cover;" src="<%= item.imageURL %>" alt="<%= item.name %>">
             <div>
@@ -46,7 +46,7 @@
         <div class="fs-2 fw-bold mb-4 text-center">Fresh Picks</div>
         <div class="row">
           <%for (const item of recipes.slice(7, 15)){ %>
-        <div class="col-12 col-md-4 col-lg-3 mb-4">
+        <div class="col-12 col-md-4 col-lg-3 mb-4 reveal-item">
           <a style="color: inherit; text-decoration: none;" class="" href="/recipe/<%= item._id %>">
             <img class="mb-3" style="width: 100%; height: 200px; object-fit: cover;" src="<%= item.imageURL %>" alt="<%= item.name %>">
             <div>
@@ -69,7 +69,7 @@
             </div>
             <div class="row">
               <%for (const item of restaurants.slice(0, 4)){ %>
-        <div class="col-12 col-md-4 col-lg-3 mb-4">
+        <div class="col-12 col-md-4 col-lg-3 mb-4 reveal-item">
           <a style="color: inherit; text-decoration: none;" class="" href="#">
             <img class="mb-3" style="width: 100%; height: 200px; object-fit: cover;" src="<%= item.imageURL %>" alt="<%= item.name %>">
             <div>
