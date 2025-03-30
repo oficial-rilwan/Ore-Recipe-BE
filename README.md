@@ -4,7 +4,7 @@
 
 # [Ore Recipe](https://ore-recipe.onrender.com/)
 
-This project is a fullstack application structured using controllers, routes, middleware, repository patterns, models, and validation layers.
+This project is a fullstack application structured using controllers, routes, middleware, repository patterns, models, and validation layers. [View](https://ore-recipe.onrender.com/) https://ore-recipe.onrender.com
 
 ## Folder Structure
 
