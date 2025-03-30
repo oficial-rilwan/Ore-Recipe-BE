@@ -22,7 +22,7 @@ This project is a fullstack application structured using controllers, routes, mi
 | GET    | `/api/restaurants`      | Get all restaurants          |
 | GET    | `/api/restaurants/:id`  | Get single restaurant        |
 
-## API Routes
+## APP Routes
 
 | Method | Route          | Description          |
 | ------ | -------------- | -------------------- |
