@@ -4,11 +4,11 @@ type TModel = Model<any, any>;
 
 class Repository {
   private context: TModel;
-  private query: { page: number; limit: number; searchFields: string[]; keyword: string };
+  private query: { page: number; limit: number; searchFields: string[]; keyword: string; filters: any };
 
   constructor(context: TModel) {
     this.context = context;
-    this.query = { page: 1, limit: 20, searchFields: [], keyword: "" };
+    this.query = { page: 1, limit: 20, searchFields: [], keyword: "", filters: {} };
   }
 
   async create<T>(data: T) {
@@ -35,19 +35,23 @@ class Repository {
     const limit = query.limit || 20;
     const skip = (page - 1) * limit;
 
-    let filters: any = {};
-
     if (query.keyword) {
       where["$or"] = [
         ...query.searchFields.map((item) => ({ [item]: { $regex: query.keyword as string, $options: "i" } })),
       ];
-      filters["$or"] = [
-        ...query.searchFields.map((item) => ({ [item]: { $regex: query.keyword as string, $options: "i" } })),
-      ];
+    }
+
+    if (query.filters) {
+      for (let key in query.filters) {
+        const value = query.filters[key];
+        if (typeof value === "string" && value.trim()) {
+          where[key] = { $regex: value, $options: "i" };
+        } else where[key] = value;
+      }
     }
 
     const result = await this.context.find(where).skip(skip).limit(limit);
-    const totalCount = await this.context.countDocuments(filters);
+    const totalCount = await this.context.countDocuments(where);
     return {
       page,
       limit,

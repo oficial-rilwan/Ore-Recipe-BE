@@ -14,10 +14,11 @@ class RecipeController {
   }
 
   async find(req: any, res: Response) {
-    const query = { searchFields: ["name"] } as any;
+    const query = { searchFields: ["name", "ingredients.name", "categories"] } as any;
     if (req.query.search) query.keyword = String(req.query.search);
     if (req.query.page) query.page = Number(req.query.page);
     if (req.query.limit) query.limit = Number(req.query.limit);
+
     if (req.query.search && req?.user) {
       await RecipeSearch.create({ query: req.query.search, userId: req.user?._id });
     }
