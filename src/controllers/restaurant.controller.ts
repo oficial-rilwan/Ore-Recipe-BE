@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import { RestaurantProps } from "../types";
 import RestaurantSearch from "../models/restaurant-search.model";
 import RestaurantRepository from "../repo/restaurant.repo";
+import { AppResponse, NotFoundError } from "../middleware/error-handler";
 
 class RecipeController {
   private repository: RestaurantRepository;
@@ -23,14 +24,15 @@ class RecipeController {
       await RestaurantSearch.create({ query: req.query.search, userId: req.user?._id });
     }
     const result = await this.repository.find<RestaurantProps>(query);
-    res.status(200).send(result);
+    new AppResponse(res).json(result);
   }
 
   async findById(req: Request, res: Response) {
     const id = req.params.id;
     const result = await this.repository.findById<RestaurantProps>(id);
-    if (!result) return res.status(404).send({ error: "Restaurant could not be found" });
-    res.status(200).send(result);
+    if (!result) throw new NotFoundError("Requested restaurant could not be found");
+
+    new AppResponse(res).json(result);
   }
 }
 

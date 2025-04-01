@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import RecipeRepository from "../repo/recipe.repo";
 import { RecipeProps } from "../types";
 import RecipeSearch from "../models/recipe-search.model";
+import { AppResponse, NotFoundError } from "../middleware/error-handler";
 
 class RecipeController {
   private repository: RecipeRepository;
@@ -24,15 +25,15 @@ class RecipeController {
     }
 
     const result = await this.repository.find<RecipeProps>(query);
-    res.status(200).send(result);
+    new AppResponse(res).json(result);
   }
 
   async findById(req: Request, res: Response) {
     const id = req.params.id;
     const result = await this.repository.findById<RecipeProps>(id);
-    if (!result) return res.status(404).send({ error: "Recipe could not be found" });
+    if (!result) throw new NotFoundError("Requested recipe could not be found");
 
-    res.status(200).send(result);
+    new AppResponse(res).json(result);
   }
 }
 

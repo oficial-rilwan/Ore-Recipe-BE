@@ -32,8 +32,11 @@ export class AuthorizationError extends ApplicationError {
 }
 
 function errorHandler(err: ApplicationError, req: Request, res: Response, next: NextFunction) {
-  if (err.statusCode) res.status(err.statusCode).json({ error: err.message, statusCode: err.statusCode });
-  else res.status(500).json({ error: err.message });
+  if (err.statusCode) {
+    res.status(err.statusCode).json({ error: err.message, statusCode: err.statusCode, name: err.name });
+  } else {
+    res.status(500).json({ error: err.message || "Unexpected error occured" });
+  }
 }
 
 export class AppResponse {

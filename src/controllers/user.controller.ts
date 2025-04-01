@@ -72,7 +72,7 @@ class UserController {
     const users = await this.repository.find<UserProps>(query);
     users.data = users.data.map((item: any) => _.omit(item, ["password"]) as UserProps);
 
-    new AppResponse(res, 200).json(users);
+    new AppResponse(res).json(users);
   }
 
   async findByName(req: Request, res: Response) {
@@ -80,12 +80,12 @@ class UserController {
     const user: any = await this.repository.findOne<UserProps>(query as any);
     if (!user) throw new NotFoundError("The requested user could not be found.");
 
-    new AppResponse(res, 200).json(_.omit(user, ["password"]));
+    new AppResponse(res).json(_.omit(user, ["password"]));
   }
 
   async profile(req: any, res: Response) {
     if (!req.isValidToken) throw new AuthorizationError("Authentication Required");
-    new AppResponse(res, 200).json(_.omit(req.user, ["password"]));
+    new AppResponse(res).json(_.omit(req.user, ["password"]));
   }
 
   async deactivate(req: any, res: Response) {
@@ -100,13 +100,11 @@ class UserController {
     if (!isValidPassword) throw new ApplicationError("Password is incorrect");
 
     await this.repository.update<Partial<UserProps>>({ isActive: false }, req.user._id);
-    new AppResponse(res, 200)
-      .cookie("token", "", 0, new Date(0))
-      .json({ data: "User account deactivated successfully" });
+    new AppResponse(res).cookie("token", "", 0, new Date(0)).json({ data: "User account deactivated successfully" });
   }
 
   async signout(req: Request, res: Response) {
-    new AppResponse(res, 200).cookie("token", "", 0, new Date(0)).json({ data: "User logged out successfully" });
+    new AppResponse(res).cookie("token", "", 0, new Date(0)).json({ data: "User logged out successfully" });
   }
 }
 

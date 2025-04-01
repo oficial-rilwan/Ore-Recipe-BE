@@ -21,12 +21,12 @@ class Repository {
   }
   async findById<T>(id: string) {
     const result = await this.context.findById(id);
-    return result.toObject() as T;
+    return (result ? result.toObject() : result) as T;
   }
   async findOne<T>(query: { [key: string]: string | number } = {}) {
     const where = { ...query };
     const result = await this.context.findOne(where);
-    return result.toObject() as T;
+    return (result ? result.toObject() : result) as T;
   }
 
   async find<T>(query = this.query) {
