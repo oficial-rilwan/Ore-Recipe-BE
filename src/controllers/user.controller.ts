@@ -32,37 +32,37 @@ class UserController {
 
   async auth(req: Request, res: Response) {
     const error = userValidation.auth(req.body);
-    if (error) return res.render("auth", { error });
+    if (error) throw new ValidationError(error);
 
     const user = await this.repository.findOne<UserProps>({ email: req.body.email });
-    if (!user) return new AppResponse(res).render("auth", { error: "Invalid email or password" });
+    if (!user) throw new ApplicationError("Invalid email or password");
 
-    if (!user.isActive) return new AppResponse(res).render("auth", { error: "Your account has been deactivated." });
+    if (!user.isActive) throw new ApplicationError("Your account has been deactivated.");
 
     const isValidPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!isValidPassword) return new AppResponse(res).render("auth", { error: "Invalid email or password" });
+    if (!isValidPassword) throw new ApplicationError("Invalid email or password");
 
-    const token = jwt.sign({ email: user.email }, this.jwtSecret, { expiresIn: "1h" });
-    new AppResponse(res).cookie("token", token).redirect("/");
+    const accessToken = jwt.sign({ email: user.email }, this.jwtSecret, { expiresIn: "1h" });
+    new AppResponse(res).cookie("accessToken", accessToken).json({ accessToken, user: _.omit(user, ["password"]) });
   }
 
   async signup(req: Request, res: Response) {
     const error = userValidation.signup(req.body);
-    if (error) return new AppResponse(res).render("register", { error });
+    if (error) throw new ValidationError(error);
 
     const user = await this.repository.findOne<UserProps>({ email: req.body.email });
-    if (user) return new AppResponse(res).render("register", { error: "This account already exists." });
+    if (user) throw new ApplicationError("This account already exists.");
 
-    const salt = await bcrypt.genSalt(10);
-    req.body.isActive = true;
     req.body.isVerified = true;
     req.body.name = `${req.body.firstName} ${req.body.lastName}`;
+
+    const salt = await bcrypt.genSalt(10);
     req.body.password = await bcrypt.hash(req.body.password, salt);
 
     const result = await this.repository.create<UserProps>(req.body);
 
-    const token = jwt.sign({ email: result.email }, this.jwtSecret, { expiresIn: "1h" });
-    new AppResponse(res).cookie("token", token).redirect("/");
+    const accessToken = jwt.sign({ email: result.email }, this.jwtSecret, { expiresIn: "1h" });
+    new AppResponse(res).cookie("accessToken", accessToken).json({ accessToken, user: _.omit(result, ["password"]) });
   }
 
   async find(req: Request, res: Response) {

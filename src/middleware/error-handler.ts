@@ -66,6 +66,9 @@ export class AppResponse {
     });
     return this;
   }
+  end() {
+    return this.res.end;
+  }
 }
 
 export default errorHandler;
