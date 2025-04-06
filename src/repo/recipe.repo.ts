@@ -2,6 +2,7 @@ import _ from "lodash";
 import Repository from ".";
 import Recipe from "../models/recipe.model";
 import { RecipeProps } from "../types";
+import RecipeSearch from "../models/recipe-search.model";
 
 class RecipeRepository extends Repository {
   constructor() {
@@ -23,6 +24,11 @@ class RecipeRepository extends Repository {
       ],
     });
     return result as RecipeProps[];
+  }
+}
+export class RecipeSearchRepository extends Repository {
+  constructor() {
+    super(RecipeSearch);
   }
 }
 

@@ -25,3 +25,9 @@ export type RestaurantProps = {
   imageURL: string;
   location: number;
 };
+
+export type SearchHistoryProps = {
+  _id: string;
+  userId: string;
+  query: string;
+};

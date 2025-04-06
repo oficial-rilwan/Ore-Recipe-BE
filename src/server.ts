@@ -5,7 +5,6 @@ import cors from "cors";
 import database from "./database";
 import userRoutes from "./routes/user.routes";
 import cookieParser from "cookie-parser";
-import appRoutes from "./routes/app.routes";
 import recipeRoutes from "./routes/recipe.routes";
 import restaurantRoutes from "./routes/restaurant.routes";
 import errorHandler from "./middleware/error-handler";
@@ -29,7 +28,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(cookieParser());
 
-app.use("/", appRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/recipes", recipeRoutes);
 app.use("/api/restaurants", restaurantRoutes);

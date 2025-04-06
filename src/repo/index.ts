@@ -24,7 +24,17 @@ class Repository {
     return (result ? result.toObject() : result) as T;
   }
   async findOne<T>(query: { [key: string]: string | number } = {}) {
-    const where = { ...query };
+    const where = {} as any;
+
+    if (query) {
+      for (let key in query) {
+        const value = query[key];
+        if (typeof value === "string" && value.trim()) {
+          where[key] = { $regex: value, $options: "i" };
+        } else where[key] = value;
+      }
+    }
+
     const result = await this.context.findOne(where);
     return (result ? result.toObject() : result) as T;
   }
@@ -50,7 +60,7 @@ class Repository {
       }
     }
 
-    const result = await this.context.find(where).skip(skip).limit(limit);
+    const result = await this.context.find(where).sort({ createdAt: -1 }).skip(skip).limit(limit);
     const totalCount = await this.context.countDocuments(where);
     return {
       page,
