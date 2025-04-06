@@ -17,11 +17,14 @@ database.connect();
 const app = express();
 const PORT = CONFIG.PORT || 8080;
 
+const allowedOrigin = process.env.NODE_ENV === "production" ? "https://ore-recipe-fe.onrender.com" : true;
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"));
 
 app.use(express.json());
-app.use(cors({ origin: true, credentials: true }));
+
+app.use(cors({ origin: allowedOrigin, credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(cookieParser());

@@ -60,7 +60,7 @@ export class AppResponse {
     this.res.cookie(name, value, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge,
       expires,
     });
