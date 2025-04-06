@@ -3,6 +3,7 @@ import RecipeRepository from "../repo/recipe.repo";
 import { RecipeProps } from "../types";
 import RecipeSearch from "../models/recipe-search.model";
 import { AppResponse, NotFoundError } from "../middleware/error-handler";
+import convertCurrency from "../utils/currency-converter";
 
 class RecipeController {
   private repository: RecipeRepository;
@@ -33,6 +34,7 @@ class RecipeController {
     const result = await this.repository.findById<RecipeProps>(id);
     if (!result) throw new NotFoundError("Requested recipe could not be found");
 
+    result["USDPrice"] = (await convertCurrency(result.price)) || 0;
     new AppResponse(res).json(result);
   }
 }

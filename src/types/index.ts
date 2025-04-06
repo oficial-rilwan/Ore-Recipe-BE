@@ -17,6 +17,7 @@ export type RecipeProps = {
   price: number;
   categories: string[];
   calories: number;
+  USDPrice: number;
 };
 export type RestaurantProps = {
   _id: string;
